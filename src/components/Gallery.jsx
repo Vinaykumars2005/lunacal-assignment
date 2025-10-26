@@ -1,3 +1,5 @@
+// File: src/components/Gallery.jsx (Final CSS Placeholder Version)
+
 import { useState } from 'react';
 // 1. Import the icons we need
 import { HiOutlineViewGrid, HiPlus, HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi';
@@ -5,69 +7,60 @@ import { HiOutlineViewGrid, HiPlus, HiOutlineChevronLeft, HiOutlineChevronRight 
 // Use the same base style
 const widgetBaseStyle = "bg-black/20 backdrop-blur-sm border border-white/10 rounded-2xl p-6";
 
-// 2. Use better image URLs that will load real photos
-const initialImages = [
-  'https://source.unsplash.com/random/400x400?architecture&sig=1',
-  'https://source.unsplash.com/random/400x400?architecture&sig=2',
-  'https://source.unsplash.com/random/400x400?architecture&sig=3',
-];
+// 2. The initial "images" are now just a list of numbers
+const initialItems = [1, 2, 3];
 
 export default function Gallery() {
-  const [images, setImages] = useState(initialImages);
+  // 3. The state now holds a list of numbers, e.g., [1, 2, 3, 4]
+  const [items, setItems] = useState(initialItems);
 
   const addImage = () => {
-    // 3. Add a new *random* image from Unsplash
-    const newImage = `https://source.unsplash.com/random/400x400?architecture&sig=${Math.random()}`;
-    setImages([...images, newImage]);
+    // 4. Add a new number to the list (e.g., 4, then 5, etc.)
+    setItems([...items, items.length + 1]);
   };
 
   return (
     <div className={widgetBaseStyle}>
       {/* Header */}
       <div className="flex justify-between items-center mb-4">
-        {/* 4. Add the grid icon next to the title */}
         <div className="flex items-center gap-3">
           <HiOutlineViewGrid className="text-xl text-gray-400" />
           <h2 className="font-medium">Gallery</h2>
         </div>
         
         <div className="flex items-center gap-2">
-          
-          {/* --- "ADD IMAGE" BUTTON UPDATED --- */}
           <button
             onClick={addImage}
             className="flex items-center gap-1.5 bg-white text-black px-3 py-1.5 rounded-full text-xs font-medium hover:bg-gray-200 transition-colors"
           >
-            {/* 5. Add the Plus icon */}
             <HiPlus />
             ADD IMAGE
           </button>
-          {/* (Note: Double-check 'px-3 py-1.5' in Figma just like you did for the tabs!) */}
-          
-          
-          {/* 6. Use the real icon components */}
           <IconButton icon={<HiOutlineChevronLeft />} />
           <IconButton icon={<HiOutlineChevronRight />} />
         </div>
       </div>
 
-      {/* Image Grid */}
+      {/* --- THIS IS THE CSS IMAGE BOX --- */}
       <div className="grid grid-cols-3 gap-3">
-        {images.map((src, index) => (
-          <img
-            key={index}
-            src={src}
-            alt={`Gallery item ${index + 1}`}
-            className="aspect-square w-full h-full object-cover rounded-lg"
-          />
+        {/* 5. We map over the list of numbers */}
+        {items.map((itemNumber) => (
+          // 6. This is a <div>, not an <img> tag. It's a gray box.
+          <div
+            key={itemNumber}
+            className="aspect-square w-full h-full rounded-lg bg-white/10 flex items-center justify-center text-xs text-gray-400"
+          >
+            Gallery item {itemNumber}
+          </div>
         ))}
       </div>
+      {/* --- END OF CSS IMAGE BOX --- */}
+
     </div>
   );
 }
 
-// --- ICON BUTTON COMPONENT UPDATED ---
-// 7. Update the IconButton to accept an icon 'prop' and match Figma size
+// IconButton component with correct 45px size
 function IconButton({ icon }) {
   return (
     <button className="bg-white/10 p-2 rounded-full text-gray-300 hover:bg-white/20 w-[45px] h-[45px] flex items-center justify-center transition-colors">
